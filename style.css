@@ -1,28 +1,49 @@
+:root {
+    --bg-gradient-start: #fbc2eb;
+    --bg-gradient-end: #a6c1ee;
+    --container-bg: #ffffff;
+    --text-color: #333;
+    --number-bg: #f0f2f5;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode {
+    --bg-gradient-start: #2c3e50;
+    --bg-gradient-end: #000000;
+    --container-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --number-bg: #333;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
 body {
     font-family: 'Helvetica Neue', sans-serif;
     background-color: #f0f2f5;
-    color: #333;
+    color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+    background-image: linear-gradient(to top, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    transition: background-image 0.3s ease, color 0.3s ease;
 }
 
 .container {
-    background-color: #ffffff;
+    background-color: var(--container-bg);
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px var(--shadow-color);
     text-align: center;
     max-width: 500px;
     width: 90%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 
 h1 {
     font-size: 2.5rem;
-    color: #333;
+    color: var(--text-color);
     margin-bottom: 30px;
 }
 
@@ -34,8 +55,8 @@ h1 {
 }
 
 .number {
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: var(--number-bg);
+    color: var(--text-color);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -44,7 +65,7 @@ h1 {
     align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px var(--shadow-color);
     transition: all 0.3s ease;
 }
 
@@ -63,4 +84,21 @@ h1 {
 #generate-btn:hover {
     background-color: #45a049;
     box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
+}
+
+#theme-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+#theme-toggle:hover {
+    background-color: var(--number-bg);
 }
