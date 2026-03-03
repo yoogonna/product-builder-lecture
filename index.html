@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘 저녁 뭐 먹지? - 메뉴 추천 서비스</title>
+    <title>오늘 저녁 뭐 먹지? & 동물상 테스트</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Teachable Machine Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -15,6 +18,21 @@
             <div id="selected-menu" class="menu-name">버튼을 눌러주세요!</div>
         </div>
         <button id="generate-btn">메뉴 추천받기</button>
+    </div>
+
+    <!-- Animal Face Test Section -->
+    <div class="container animal-test-section">
+        <h1>나의 동물상 테스트 🐶🐱</h1>
+        <p class="description">카메라를 비추면 인공지능이 당신의 동물상을 분석합니다!</p>
+        
+        <div id="webcam-wrapper">
+            <div id="webcam-container"></div>
+            <div id="loading-spinner" class="hidden">모델 로딩 중...</div>
+        </div>
+
+        <button type="button" id="start-test-btn" class="primary-btn">테스트 시작하기</button>
+        
+        <div id="label-container" class="result-container"></div>
     </div>
 
     <div class="container contact-section">
@@ -32,8 +50,6 @@
                 <label for="message">문의 내용</label>
                 <textarea id="message" name="message" rows="5" placeholder="제휴 관련 내용을 자유롭게 적어주세요" required></textarea>
             </div>
-            <!-- Formspree setting: redirect after success (optional) -->
-            <!-- <input type="hidden" name="_next" value="https://yourdomain.com/thanks.html"> -->
             <button type="submit" id="submit-btn">문의 보내기</button>
         </form>
     </div>
@@ -42,16 +58,7 @@
     <div class="container" style="margin-top: 30px; text-align: left; padding: 40px;">
         <div id="disqus_thread"></div>
         <script>
-            /**
-            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-            /*
-            var disqus_config = function () {
-            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-            };
-            */
-            (function() { // DON'T EDIT BELOW THIS LINE
+            (function() { 
             var d = document, s = d.createElement('script');
             s.src = 'https://productbuilder-rgtym26ovg.disqus.com/embed.js';
             s.setAttribute('data-timestamp', +new Date());
