@@ -1,4 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Language Toggle Logic ---
+    let currentLang = localStorage.getItem('lang') || 'ko';
+    const langToggle = document.getElementById('lang-toggle');
+    
+    function updateLanguage() {
+        const koElems = document.querySelectorAll('.lang-ko');
+        const enElems = document.querySelectorAll('.lang-en');
+        
+        if (currentLang === 'ko') {
+            koElems.forEach(el => el.classList.remove('hidden'));
+            enElems.forEach(el => el.classList.add('hidden'));
+            langToggle.textContent = '🌐 EN';
+            // Update placeholders
+            document.getElementById('name').placeholder = "성함 또는 업체명";
+            document.getElementById('message').placeholder = "문의 내용";
+        } else {
+            koElems.forEach(el => el.classList.add('hidden'));
+            enElems.forEach(el => el.classList.remove('hidden'));
+            langToggle.textContent = '🌐 KO';
+            // Update placeholders
+            document.getElementById('name').placeholder = "Name or Company";
+            document.getElementById('message').placeholder = "Your message";
+        }
+        localStorage.setItem('lang', currentLang);
+    }
+
+    if (langToggle) {
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'ko' ? 'en' : 'ko';
+            updateLanguage();
+        });
+    }
+    updateLanguage();
+
     // --- Tab Switching Logic ---
     const tabBtns = document.querySelectorAll('.tab-btn');
     const pages = document.querySelectorAll('.page-content');
@@ -6,14 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const target = btn.dataset.target;
-            
             tabBtns.forEach(b => b.classList.remove('active'));
             pages.forEach(p => p.classList.remove('active'));
-            
             btn.classList.add('active');
             document.getElementById(target).classList.add('active');
-            
-            // Stop webcam if switching away from animal page
             if (target !== 'animal-page' && webcam) {
                 webcam.stop();
                 document.getElementById('webcam-container').innerHTML = '';
@@ -30,10 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
     const menuData = [
-        { category: '한식', menus: ['김치찌개', '된장찌개', '제육볶음', '비빔밥', '불고기', '삼겹살', '순두부찌개', '보쌈', '닭갈비', '냉면'] },
-        { category: '일식', menus: ['초밥', '돈카츠', '라멘', '우동', '규동', '사케동', '텐동', '메밀소바', '야키소바', '오코노미야키'] },
-        { category: '중식', menus: ['짜장면', '짬뽕', '탕수육', '마라탕', '꿔바로우', '볶음밥', '마파두부', '딤섬', '양꼬치', '잡채밥'] },
-        { category: '양식/기타', menus: ['파스타', '피자', '스테이크', '햄버거', '샌드위치', '샐러드', '타코', '커리', '쌀국수', '팟타이'] }
+        { category: { ko: '한식', en: 'Korean' }, menus: { ko: ['김치찌개', '된장찌개', '제육볶음', '비빔밥', '불고기', '삼겹살', '순두부찌개', '보쌈', '닭갈비', '냉면'], en: ['Kimchi Stew', 'Soybean Stew', 'Jeyuk Bokkeum', 'Bibimbap', 'Bulgogi', 'Samgyeopsal', 'Soft Tofu Stew', 'Bossam', 'Dakgalbi', 'Naengmyeon'] } },
+        { category: { ko: '일식', en: 'Japanese' }, menus: { ko: ['초밥', '돈카츠', '라멘', '우동', '규동', '사케동', '텐동', '메밀소바', '야키소바', '오코노미야키'], en: ['Sushi', 'Tonkatsu', 'Ramen', 'Udon', 'Gyudon', 'Sakedon', 'Tendon', 'Soba', 'Yakisoba', 'Okonomiyaki'] } },
+        { category: { ko: '중식', en: 'Chinese' }, menus: { ko: ['짜장면', '짬뽕', '탕수육', '마라탕', '꿔바로우', '볶음밥', '마파두부', '딤섬', '양꼬치', '잡채밥'], en: ['Jajangmyeon', 'Jjamppong', 'Tangsuyuk', 'Malatang', 'Guobaorou', 'Fried Rice', 'Mapo Tofu', 'Dim Sum', 'Lamb Skewers', 'Japchaebap'] } },
+        { category: { ko: '양식/기타', en: 'Western/Other' }, menus: { ko: ['파스타', '피자', '스테이크', '햄버거', '샌드위치', '샐러드', '타코', '커리', '쌀국수', '팟타이'], en: ['Pasta', 'Pizza', 'Steak', 'Burger', 'Sandwich', 'Salad', 'Taco', 'Curry', 'Pho', 'Pad Thai'] } }
     ];
 
     const currentTheme = localStorage.getItem('theme');
@@ -45,29 +75,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
-            let theme = 'light';
-            if (body.classList.contains('dark-mode')) {
-                theme = 'dark';
-                themeToggle.textContent = '☀️';
-            } else {
-                themeToggle.textContent = '🌙';
-            }
+            let theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
             localStorage.setItem('theme', theme);
         });
     }
 
     function getRandomMenu() {
         const randomCategoryObj = menuData[Math.floor(Math.random() * menuData.length)];
-        const randomMenu = randomCategoryObj.menus[Math.floor(Math.random() * randomCategoryObj.menus.length)];
-        return { category: randomCategoryObj.category, name: randomMenu };
+        const category = randomCategoryObj.category[currentLang];
+        const menuList = randomCategoryObj.menus[currentLang];
+        const randomMenu = menuList[Math.floor(Math.random() * menuList.length)];
+        return { category, name: randomMenu };
     }
 
     function displayMenu() {
+        const menu = getRandomMenu();
+        categoryBadgeElem.innerHTML = `<span class="lang-ko">${menu.category}</span>`;
+        selectedMenuElem.innerHTML = `<span class="lang-ko">${menu.name}</span>`;
         selectedMenuElem.classList.remove('animate-pop');
         void selectedMenuElem.offsetWidth; 
-        const menu = getRandomMenu();
-        categoryBadgeElem.textContent = menu.category;
-        selectedMenuElem.textContent = menu.name;
         selectedMenuElem.classList.add('animate-pop');
     }
 
@@ -120,16 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
         webcamContainer.classList.remove('hidden');
         imagePreview.classList.add('hidden');
         loadingSpinner.classList.remove('hidden');
-        
         await loadModel();
         createLabels();
-
-        const flip = true;
-        webcam = new tmImage.Webcam(200, 200, flip);
+        webcam = new tmImage.Webcam(200, 200, true);
         await webcam.setup();
         await webcam.play();
         window.requestAnimationFrame(loopTM);
-
         webcamContainer.appendChild(webcam.canvas);
         loadingSpinner.classList.add('hidden');
         startWebcamBtn.classList.add('hidden');
@@ -140,21 +163,16 @@ document.addEventListener('DOMContentLoaded', () => {
         isWebcamMode = false;
         const file = e.target.files[0];
         if (!file) return;
-
         analysisViewer.classList.remove('hidden');
         imagePreview.classList.remove('hidden');
         webcamContainer.classList.add('hidden');
         loadingSpinner.classList.remove('hidden');
-
         if (webcam) webcam.stop();
-
         const reader = new FileReader();
         reader.onload = async (event) => {
             imagePreview.src = event.target.result;
             await loadModel();
             createLabels();
-            
-            // Wait for image to load before predicting
             imagePreview.onload = async () => {
                 await predictTM(imagePreview);
                 loadingSpinner.classList.add('hidden');
@@ -177,9 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < maxPredictions; i++) {
             const className = prediction[i].className;
             const probability = (prediction[i].probability * 100).toFixed(0);
-            
             const wrapper = labelContainer.childNodes[i];
-            wrapper.querySelector('.class-name').textContent = className;
+            wrapper.querySelector('.class-name').textContent = className === 'dog' ? (currentLang === 'ko' ? '강아지' : 'Dog') : (currentLang === 'ko' ? '고양이' : 'Cat');
             wrapper.querySelector('.class-prob').textContent = probability + "%";
             wrapper.querySelector('.progress-fill').style.width = probability + "%";
         }
@@ -201,30 +218,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Contact Form Logic ---
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
             const originalBtnText = submitBtn.textContent;
-            submitBtn.textContent = '보내는 중...';
+            submitBtn.textContent = currentLang === 'ko' ? '보내는 중...' : 'Sending...';
             submitBtn.disabled = true;
-            const formData = new FormData(contactForm);
             try {
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
-                    body: formData,
+                    body: new FormData(contactForm),
                     headers: { 'Accept': 'application/json' }
                 });
                 if (response.ok) {
-                    alert('문의가 성공적으로 전송되었습니다!');
+                    alert(currentLang === 'ko' ? '문의가 성공적으로 전송되었습니다!' : 'Inquiry sent successfully!');
                     contactForm.reset();
                 } else {
-                    alert('전송 중 오류가 발생했습니다.');
+                    alert(currentLang === 'ko' ? '전송 중 오류가 발생했습니다.' : 'Error during sending.');
                 }
             } catch (error) {
-                alert('네트워크 오류가 발생했습니다.');
+                alert(currentLang === 'ko' ? '네트워크 오류가 발생했습니다.' : 'Network error.');
             } finally {
                 submitBtn.textContent = originalBtnText;
                 submitBtn.disabled = false;

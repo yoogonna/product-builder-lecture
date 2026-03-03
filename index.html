@@ -3,43 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>멀티 서비스 - 메뉴 추천 & 동물상 테스트</title>
+    <title>Multi Service - Menu & Animal Test</title>
     <link rel="stylesheet" href="style.css">
     <!-- Teachable Machine Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
-    <!-- Tab Navigation -->
+    <!-- Navigation & Controls -->
     <nav class="tab-nav">
-        <button class="tab-btn active" data-target="menu-page">🍽️ 메뉴 추천</button>
-        <button class="tab-btn" data-target="animal-page">🐶 동물상 테스트</button>
+        <button class="tab-btn active" data-target="menu-page">
+            <span class="lang-ko">🍽️ 메뉴 추천</span>
+            <span class="lang-en hidden">🍽️ Menu</span>
+        </button>
+        <button class="tab-btn" data-target="animal-page">
+            <span class="lang-ko">🐶 동물상 테스트</span>
+            <span class="lang-en hidden">🐶 Animal Test</span>
+        </button>
     </nav>
 
-    <button id="theme-toggle" title="테마 변경">🌙</button>
+    <div class="top-controls">
+        <button id="lang-toggle" title="Change Language">🌐 EN</button>
+        <button id="theme-toggle" title="Toggle Theme">🌙</button>
+    </div>
 
     <!-- Menu Recommender Page -->
     <div id="menu-page" class="page-content active">
         <div class="container">
-            <h1>오늘 저녁 뭐 먹지? 🍜</h1>
+            <h1 class="lang-ko">오늘 저녁 뭐 먹지? 🍜</h1>
+            <h1 class="lang-en hidden">What's for Dinner? 🍜</h1>
             <div class="menu-display">
-                <div id="category-badge" class="badge">카테고리</div>
-                <div id="selected-menu" class="menu-name">버튼을 눌러주세요!</div>
+                <div id="category-badge" class="badge">
+                    <span class="lang-ko">카테고리</span>
+                    <span class="lang-en hidden">Category</span>
+                </div>
+                <div id="selected-menu" class="menu-name">
+                    <span class="lang-ko">버튼을 눌러주세요!</span>
+                    <span class="lang-en hidden">Press the button!</span>
+                </div>
             </div>
-            <button id="generate-btn">메뉴 추천받기</button>
+            <button id="generate-btn">
+                <span class="lang-ko">메뉴 추천받기</span>
+                <span class="lang-en hidden">Get Recommendation</span>
+            </button>
+        </div>
+
+        <!-- Contact Section (Only in Menu Page) -->
+        <div class="container contact-section">
+            <h2 class="lang-ko">🤝 제휴 문의하기</h2>
+            <h2 class="lang-en hidden">🤝 Affiliate Inquiry</h2>
+            <form id="contact-form" action="https://formspree.io/f/xykdojev" method="POST">
+                <div class="form-group">
+                    <label for="name">
+                        <span class="lang-ko">이름 / 업체명</span>
+                        <span class="lang-en hidden">Name / Company</span>
+                    </label>
+                    <input type="text" id="name" name="name" placeholder="성함 또는 업체명" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">
+                        <span class="lang-ko">이메일 주소</span>
+                        <span class="lang-en hidden">Email Address</span>
+                    </label>
+                    <input type="email" id="email" name="_replyto" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">
+                        <span class="lang-ko">문의 내용</span>
+                        <span class="lang-en hidden">Message</span>
+                    </label>
+                    <textarea id="message" name="message" rows="5" placeholder="문의 내용" required></textarea>
+                </div>
+                <button type="submit" id="submit-btn">
+                    <span class="lang-ko">문의 보내기</span>
+                    <span class="lang-en hidden">Send Message</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Disqus (Only in Menu Page) -->
+        <div class="container" style="margin-top: 30px; text-align: left; padding: 40px;">
+            <div id="disqus_thread"></div>
         </div>
     </div>
 
     <!-- Animal Face Test Page -->
     <div id="animal-page" class="page-content">
         <div class="container animal-test-section">
-            <h1>나의 동물상 테스트 🐶🐱</h1>
-            <p class="description">사진을 업로드하거나 카메라를 비추어 동물상을 분석해보세요!</p>
+            <h1 class="lang-ko">나의 동물상 테스트 🐶🐱</h1>
+            <h1 class="lang-en hidden">Animal Face Test 🐶🐱</h1>
+            <p class="description lang-ko">사진을 업로드하거나 카메라를 비추어 동물상을 분석해보세요!</p>
+            <p class="description lang-en hidden">Upload a photo or use your camera to analyze your animal face type!</p>
             
             <div class="upload-options">
-                <label for="file-upload" class="upload-btn">📷 사진 업로드하기</label>
+                <label for="file-upload" class="upload-btn">
+                    <span class="lang-ko">📷 사진 업로드</span>
+                    <span class="lang-en hidden">📷 Upload Photo</span>
+                </label>
                 <input type="file" id="file-upload" accept="image/*" class="hidden">
-                <button type="button" id="start-webcam-btn" class="upload-btn">📹 실시간 카메라 시작</button>
+                <button type="button" id="start-webcam-btn" class="upload-btn">
+                    <span class="lang-ko">📹 실시간 카메라</span>
+                    <span class="lang-en hidden">📹 Live Camera</span>
+                </button>
             </div>
 
             <div id="analysis-viewer" class="hidden">
@@ -47,48 +112,29 @@
                     <div id="webcam-container"></div>
                     <img id="image-preview" class="hidden" alt="Uploaded Image Preview">
                 </div>
-                <div id="loading-spinner" class="hidden">분석 중...</div>
+                <div id="loading-spinner" class="hidden">
+                    <span class="lang-ko">분석 중...</span>
+                    <span class="lang-en hidden">Analyzing...</span>
+                </div>
             </div>
             
             <div id="label-container" class="result-container"></div>
             
-            <button type="button" id="reset-test-btn" class="secondary-btn hidden">다시 테스트하기</button>
+            <button type="button" id="reset-test-btn" class="secondary-btn hidden">
+                <span class="lang-ko">다시 테스트하기</span>
+                <span class="lang-en hidden">Test Again</span>
+            </button>
         </div>
     </div>
 
-    <!-- Common Sections (Contact & Comments) -->
-    <div class="container contact-section">
-        <h2>🤝 제휴 문의하기</h2>
-        <form id="contact-form" action="https://formspree.io/f/xykdojev" method="POST">
-            <div class="form-group">
-                <label for="name">이름 / 업체명</label>
-                <input type="text" id="name" name="name" placeholder="성함 또는 업체명을 입력해주세요" required>
-            </div>
-            <div class="form-group">
-                <label for="email">이메일 주소</label>
-                <input type="email" id="email" name="_replyto" placeholder="답변받으실 이메일을 입력해주세요" required>
-            </div>
-            <div class="form-group">
-                <label for="message">문의 내용</label>
-                <textarea id="message" name="message" rows="5" placeholder="제휴 관련 내용을 자유롭게 적어주세요" required></textarea>
-            </div>
-            <button type="submit" id="submit-btn">문의 보내기</button>
-        </form>
-    </div>
-
-    <div class="container" style="margin-top: 30px; text-align: left; padding: 40px;">
-        <div id="disqus_thread"></div>
-        <script>
-            (function() { 
-            var d = document, s = d.createElement('script');
-            s.src = 'https://productbuilder-rgtym26ovg.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-
+    <script>
+        (function() { 
+        var d = document, s = d.createElement('script');
+        s.src = 'https://productbuilder-rgtym26ovg.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
     <script src="main.js"></script>
 </body>
 </html>

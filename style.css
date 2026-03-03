@@ -153,207 +153,41 @@ h1 {
     transform: translateY(0);
 }
 
-#theme-toggle {
+/* Navigation & Controls Styling */
+.top-controls {
     position: fixed;
     top: 20px;
     right: 20px;
-    background-color: var(--nav-bg);
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 12px;
-    border-radius: 15px;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px var(--shadow-color);
-}
-
-/* Animal Face Test Styling */
-.upload-options {
     display: flex;
     gap: 10px;
-    margin-bottom: 30px;
+    z-index: 1000;
 }
 
-.upload-btn {
-    flex: 1;
-    background-color: var(--badge-bg);
-    color: var(--text-color);
-    padding: 15px;
-    border-radius: 12px;
+#lang-toggle, #theme-toggle {
+    background-color: var(--nav-bg);
+    border: none;
+    font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
+    padding: 12px 18px;
+    border-radius: 15px;
     transition: all 0.3s ease;
-    border: 2px dashed #ccc;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    color: var(--text-color);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.dark-mode .upload-btn {
-    border-color: #444;
-}
-
-.upload-btn:hover {
+#lang-toggle:hover, #theme-toggle:hover {
+    transform: translateY(-2px);
     background-color: var(--accent-color);
     color: white;
-    border-color: transparent;
-}
-
-#image-preview {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.secondary-btn {
-    background-color: var(--badge-bg);
-    color: var(--text-color);
-    padding: 12px 25px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-/* ... (Existing styles for results and contact form) ... */
-
-.contact-section {
-    padding: 40px;
-}
-
-.contact-section h2 {
-    margin-bottom: 25px;
-    font-size: 1.5rem;
-}
-
-.form-group {
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
-
-.form-group input, 
-.form-group textarea {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #eee;
-    border-radius: 12px;
-    font-size: 1rem;
-    background-color: var(--container-bg);
-    color: var(--text-color);
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-.dark-mode .form-group input,
-.dark-mode .form-group textarea {
-    border-color: #333;
-}
-
-.form-group input:focus, 
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--accent-color);
-}
-
-#submit-btn {
-    background-color: #2f3542;
-    color: white;
-    padding: 14px 25px;
-    border: none;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    transition: all 0.3s ease;
-}
-
-.dark-mode #submit-btn {
-    background-color: #57606f;
-}
-
-#submit-btn:hover {
-    background-color: #000;
-}
-
-.dark-mode #submit-btn:hover {
-    background-color: #ffffff;
-    color: #000;
-}
-
-/* Animal Face Test Section Styling */
-.animal-test-section {
-    margin-bottom: 30px;
-}
-
-.description {
-    color: var(--text-color);
-    margin-bottom: 25px;
-    opacity: 0.8;
-}
-
-#webcam-wrapper {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 30px;
-    border-radius: 20px;
-    overflow: hidden;
-    background-color: var(--badge-bg);
-    box-shadow: 0 8px 20px var(--shadow-color);
-}
-
-#webcam-container canvas {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-}
-
-.result-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    text-align: left;
-}
-
-.result-bar-wrapper {
-    width: 100%;
-}
-
-.label-text {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.progress-bar {
-    height: 20px;
-    background-color: var(--badge-bg);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background-color: var(--accent-color);
-    width: 0%;
-    transition: width 0.3s ease;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 #loading-spinner {
