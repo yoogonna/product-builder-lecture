@@ -1,25 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
+    <title>오늘 저녁 뭐 먹지? - 메뉴 추천 서비스</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <button id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
-        <h1>Lotto Number Generator</h1>
-        <div class="lotto-numbers">
-            <span class="number"></span>
-            <span class="number"></span>
-            <span class="number"></span>
-            <span class="number"></span>
-            <span class="number"></span>
-            <span class="number"></span>
+        <button id="theme-toggle" title="테마 변경">🌙</button>
+        <h1>오늘 저녁 뭐 먹지? 🍜</h1>
+        <div class="menu-display">
+            <div id="category-badge" class="badge">카테고리</div>
+            <div id="selected-menu" class="menu-name">버튼을 눌러주세요!</div>
         </div>
-        <button id="generate-btn">Generate Numbers</button>
+        <button id="generate-btn">메뉴 추천받기</button>
     </div>
+
+    <div class="container contact-section">
+        <h2>🤝 제휴 문의하기</h2>
+        <form id="contact-form" action="https://formspree.io/f/xykdojev" method="POST">
+            <div class="form-group">
+                <label for="name">이름 / 업체명</label>
+                <input type="text" id="name" name="name" placeholder="성함 또는 업체명을 입력해주세요" required>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일 주소</label>
+                <input type="email" id="email" name="_replyto" placeholder="답변받으실 이메일을 입력해주세요" required>
+            </div>
+            <div class="form-group">
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" rows="5" placeholder="제휴 관련 내용을 자유롭게 적어주세요" required></textarea>
+            </div>
+            <!-- Formspree setting: redirect after success (optional) -->
+            <!-- <input type="hidden" name="_next" value="https://yourdomain.com/thanks.html"> -->
+            <button type="submit" id="submit-btn">문의 보내기</button>
+        </form>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>
