@@ -198,14 +198,75 @@ h1 {
     font-weight: bold;
 }
 
-/* Animation */
-@keyframes pop {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+/* ... (Existing variables and basic styles) ... */
+
+.intro-text {
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-size: 1.05rem;
+    opacity: 0.9;
+    word-break: keep-all;
 }
 
-.animate-pop {
-    animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.text-left {
+    text-align: left;
+}
+
+.info-section h2 {
+    font-size: 1.5rem;
+    margin: 30px 0 15px;
+}
+
+.info-section p {
+    line-height: 1.8;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #eee;
+    margin: 40px 0;
+}
+
+.dark-mode hr {
+    background: #333;
+}
+
+.privacy-text p {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* Footer Styling */
+.site-footer {
+    width: 100%;
+    padding: 40px 0;
+    margin-top: 50px;
+    text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.dark-mode .site-footer {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-top-color: rgba(255,255,255,0.05);
+}
+
+.site-footer p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    opacity: 0.7;
+}
+
+/* Comment section title */
+.comment-container h3 {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    border-left: 4px solid var(--accent-color);
+    padding-left: 10px;
 }
 
 /* Animal Face Test Styling */
